@@ -1,5 +1,6 @@
-import { MetaFunction } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
+import { json, LoaderFunction, MetaFunction, redirect } from "@remix-run/cloudflare";
+import { Outlet } from "@remix-run/react";
+import { getAuthenticatedUser } from "~/services/auth.server";
 
 export const meta: MetaFunction = () => {
     return [
@@ -15,23 +16,25 @@ export const meta: MetaFunction = () => {
     ];
 };
 
-export const loader = async () => {
-    return ['Hello', 'Martin']
-}
+export const loader: LoaderFunction = async ({ context, request }) => {
+    // @TODO: Add dala loading and sending to the client
+    
+    const { user } = await getAuthenticatedUser(context, request);
+    if (user) {
+      return json({ok: true});
+    }
+    // Not authenticated, redirect to login:
+    return redirect("/auth/login", 302);
+  };
 
 export default function Dashboard() {
-    const data = useLoaderData<typeof loader>()
+    //const data = useLoaderData<typeof loader>()
 
     return (
         <div>
-            {data.map((d, i) => {
-                return (
-                    <>
-                        <span key={i}>{d}</span>
-                        <br />
-                    </>
-                )
-            })}
+            Dashboard
+            <br />
+            <Outlet />
         </div>
     )
 }
