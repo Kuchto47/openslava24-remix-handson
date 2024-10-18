@@ -66,8 +66,10 @@ export const getAuthenticatedUser = async (
   return { session, user, headers };
 };
 
-export const isUserAuthenticated = async (context: AppLoadContext,
-  request: Request) => {
+export const isUserAuthenticated = async (
+  context: AppLoadContext,
+  request: Request
+) => {
   const { user } = await getAuthenticatedUser(context, request);
   if (!user) {
     throw redirect("/auth/login");

@@ -3,6 +3,11 @@ name = "remix-app"
 compatibility_date = "2024-10-11"
 pages_build_output_dir = "./build/client"
 
+[[kv_namespaces]]
+binding = "SHORT_URLS"
+id = "2400e09b1f8440d9a51fe6b6deb1b3a0"
+preview_id = "2400e09b1f8440d9a51fe6b6deb1b3a0" # should be different to have different KV 'store'
+
 # Automatically place your workloads in an optimal location to minimize latency.
 # If you are running back-end logic in a Pages Function, running it closer to your back-end infrastructure
 # rather than the end user may result in better performance.

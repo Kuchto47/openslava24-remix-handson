@@ -1,11 +1,11 @@
-import { json, redirect } from "@remix-run/cloudflare";
+import { json, LoaderFunction, redirect } from "@remix-run/cloudflare";
 
 import { isUserAuthenticated } from "~/services/auth.server";
 
 // @TODO: Finalize the loader function
 
-export const loader = async () => {
-  if (isUserAuthenticated()) {
+export const loader: LoaderFunction = async ({ context, request }) => {
+  if (await isUserAuthenticated(context, request)) {
     return json({ /* data */ });
   }
   // Not authenticated, redirect to login:
